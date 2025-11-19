@@ -1,0 +1,58 @@
+# ---- Node ----
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+
+# ---- Logs ----
+logs/
+*.log
+*.log.*
+log.txt
+
+# ---- Environment Variables ----
+.env
+.env.local
+.env.*.local
+
+# ---- Dist / Build ----
+dist/
+build/
+.cache/
+.temp/
+
+# ---- Vite ----
+vite.config.ts.timestamp-*
+*.tsbuildinfo
+
+# ---- MacOS ----
+.DS_Store
+
+# ---- Linux ----
+*.swp
+*.swo
+
+# ---- IDE ----
+.vscode/
+.idea/
+*.iml
+
+# ---- Backend ----
+backend/node_modules/
+backend/.env
+backend/dist/
+backend/coverage/
+
+# ---- Frontend ----
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/dist/
+frontend/coverage/
+
+# ---- Optional ----
+*.bak
+*.tmp

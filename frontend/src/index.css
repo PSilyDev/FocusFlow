@@ -10,3 +10,17 @@
     -ms-overflow-style: none; /* Hide the scrollbar on IE and Edge */
     scrollbar-width: none; /* Hide the scrollbar on Firefox */
 }
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background: radial-gradient(circle at top, #020617 0, #000 55%, #020617 100%);
+    color: #e5e7eb;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Segoe UI", sans-serif;
+  }
+  

@@ -1,75 +1,98 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
+import { api } from "../apiClient"; // <-- use shared axios instance
 
-export function Signup(){
+export function Signup() {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
 
-    const {register, handleSubmit} = useForm();
+  const onSubmit = async (data) => {
+    try {
+      const response = await api.post("/signup", data);
 
-    const onSubmit = async(data) => {
-        try{
-            const response = await axios.post('http://localhost:4000/signup', data);
-            enqueueSnackbar(response.data);
-            navigate('/login');
-        }
-        catch(err){
-            console.log(err);
-            throw err;
-        }
+      enqueueSnackbar(response.data);
+      navigate("/login");
+    } catch (err) {
+      console.log(err);
+      throw err;
     }
+  };
 
-    return(
-        <div className="fixed grid grid-cols-12">
-            
-            <div className="col-span-1 mt-2">
+  return (
+    <div className="flex min-h-screen w-full items-center justify-center px-4 py-6">
+      {/* Home / Brand Button */}
+      <div className="absolute left-4 top-4">
+        <Link to="/">
+          <button className="rounded-xl bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 px-4 py-2 text-sm font-medium text-white shadow-lg shadow-purple-500/40 transition hover:brightness-110">
+            FocusFlow
+          </button>
+        </Link>
+      </div>
 
-                <Link to="/" className="m-4">
-                    <button type="button" className="mt-3 w-24 h-10 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center lg:mt-2">Checklist</button>
-                </Link>
-                <div className="col-span-11 w-screen h-screen flex justify-center items-center">
+      {/* Signup Card */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-950/60 px-6 py-8 shadow-xl shadow-black/40 backdrop-blur-lg"
+      >
+        <h2 className="text-center text-2xl font-bold text-white">
+          Create a new account
+        </h2>
 
+        <p className="mt-2 mb-6 text-center text-sm text-slate-400">
+          It’s quick and easy.
+        </p>
 
-                    <form onSubmit={handleSubmit(onSubmit)} className="lg:bg-slate-800 w-2/6 h-4/5 rounded-md flex flex-col shadow-2xl shadow-gray-800 w-full max-w-lg md:w-3/5 lg:w-3/5 h-full max-h-lg md:h-4/6 lg:w-4/6 sm: bg-transparent w-4/5 shadow-none">
-
-                        <div className="lg:visible text-center text-2xl text-white font-sans font-medium tracking-normal mt-6 sm: invisible">Create a new account</div>
-                        <div className="lg:visible mt-1 text-center text-lg text-slate-300 font-sans font-normal sm: invisible">
-                            It's quick and easy.
-                        </div>
-                        <hr className="lg:visible w-full border-t border-gray-500 mt-6 sm: invisible" />
-
-                        <input 
-                            type="text" 
-                            placeholder="username" 
-                            {...register("username")}
-                            className="w-9/12 h-12 mx-auto px-3 rounded outline-0 mt-14 mb-3"
-                        /><br />
-                        
-                        <input 
-                            type="text" 
-                            placeholder="email" 
-                            {...register("email")}
-                            className="w-9/12 h-12 mx-auto px-3 rounded outline-0 mb-3"
-                        /><br />
-                        
-                        <input 
-                            type="password" 
-                            placeholder="password" 
-                            {...register("password")}
-                            className="w-9/12 h-12 mx-auto px-3 rounded outline-0 mb-2"
-                        /><br />
-
-                        <button
-                            type="submit"
-                            className="w-9/12 h-14 mx-auto px-3 rounded outline-0 mt-4 text-white bg-gradient-to-r from-green-500 via-green-600 to-green-700">
-                                Signup
-                        </button>
-                        <div className="text-blue-500 text-md mx-auto mt-4"><a href="/login">Already have an account?</a></div>
-                    </form>
-                </div>
-            </div>
+        {/* Username */}
+        <div className="mt-4">
+          <input
+            type="text"
+            placeholder="Username"
+            {...register("username")}
+            className="w-full rounded-xl bg-slate-900/60 px-4 py-3 text-slate-100 placeholder-slate-400 outline-none ring-1 ring-white/10 transition focus:ring-indigo-500/40"
+          />
         </div>
-    );
+
+        {/* Email */}
+        <div className="mt-4">
+          <input
+            type="text"
+            placeholder="Email"
+            {...register("email")}
+            className="w-full rounded-xl bg-slate-900/60 px-4 py-3 text-slate-100 placeholder-slate-400 outline-none ring-1 ring-white/10 transition focus:ring-indigo-500/40"
+          />
+        </div>
+
+        {/* Password */}
+        <div className="mt-4">
+          <input
+            type="password"
+            placeholder="Password"
+            {...register("password")}
+            className="w-full rounded-xl bg-slate-900/60 px-4 py-3 text-slate-100 placeholder-slate-400 outline-none ring-1 ring-white/10 transition focus:ring-indigo-500/40"
+          />
+        </div>
+
+        {/* Button */}
+        <button
+          type="submit"
+          className="mt-6 w-full rounded-xl bg-gradient-to-r from-green-500 via-green-600 to-green-700 px-4 py-3 font-semibold text-white shadow-lg shadow-green-600/30 transition hover:brightness-110"
+        >
+          Signup
+        </button>
+
+        {/* Footer */}
+        <div className="mt-4 text-center text-slate-300">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="font-medium text-blue-400 hover:underline"
+          >
+            Login
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
 }

@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 
 // step 1 - connect to mongodb
-mongoose.connect('mongodb+srv://PSilyDev:%40Yashsri01@100xdev.crsftik.mongodb.net/');
-
+mongoose.connect(process.env.DB_URL)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error("MongoDB error:", err));
 // step 2 - define schemas
 
 const UserSchema = new mongoose.Schema({
